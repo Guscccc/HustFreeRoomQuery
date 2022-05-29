@@ -290,19 +290,15 @@ int searchForRoom(string* roomList, string** allStat, string* desiredRooms, int 
 			}
 			if (order == "GetRoomFreeFromUntil") {
 				if (j == b - 1) {
-					flag = allStat[i][b - 1] != "空闲";
+					break;
 				}
-				else {
-					flag = allStat[i][j] == "空闲";
-				}
+				flag = allStat[i][j] == "空闲"&&allStat[i][b - 1] != "空闲";
 			}
 			if (order == "GetRoomJustFreedFromUntil") {
-				if (j = b - 1) {
-					flag = allStat[i][a - 2] != "空闲" && allStat[i][b - 1] != "空闲";
+				if (j == b - 1) {
+					break;
 				}
-				else {
-					flag = allStat[i][a - 2] != "空闲" && allStat[i][j] == "空闲";
-				}
+				flag = allStat[i][a - 2] != "空闲" && allStat[i][j] == "空闲" && allStat[i][b - 1] != "空闲";
 			}
 			if (flag == 0) {
 				break;
