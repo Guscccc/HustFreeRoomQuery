@@ -27,6 +27,7 @@ Room::Room(string roomName) {
 	name = roomName;
 }
 string Room::generateUrl(string time) {
+	//生成向微校园系统查询该教室某日占用情况的URL
 	string _jslbh, _jsmc, _code, _jc, _time, _titleJson;
 	string tmp = orientation == "S" ? "C120" : "C121";//微校园系统中用C120和C121代表西十二楼S和西十二楼N
 	stringstream url;
