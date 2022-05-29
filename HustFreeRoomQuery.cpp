@@ -338,7 +338,8 @@ int main() {
 	cout << "本程序开源，请获取本程序源代码自行审阅后编译使用。" << endl;
 	cout << "本程序仅供方便查找自习教室使用，请勿将本程序用于任何不当用途。作者不对任何因对本程序的不当使用而产生的后果负责。" << endl;
 	cout << "谢谢理解！" << endl;
-	cout <<  "开源在Github，满意给个star, 谢谢: https://github.com/Guscccc/HustFreeRoomQuery" << endl;
+	cout << "开源在Github，满意给个star, 谢谢: https://github.com/Guscccc/HustFreeRoomQuery" << endl;
+	cout << "E-mail: 1596445589@qq.com" << endl;
 	cout << endl << "登录该网址取得cookie：http://hub.m.hust.edu.cn/aam/room/queryFreeRoomDetail.action" << endl << endl;
 	//手动输入截获的cookie，模拟登录
 	cout << "请输入cookie: ";
