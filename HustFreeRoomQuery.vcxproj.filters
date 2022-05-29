@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="西十二空闲教室查询增强版.cpp">
+    <ClCompile Include="HustFreeRoomQuery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
