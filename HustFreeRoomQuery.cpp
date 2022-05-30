@@ -85,7 +85,7 @@ static int UTF8ToGB2312(const char* utf8, char* gb2312) {
 }
 
 void roomStatDataWashing(string s, string* singleRoomStat) {
-	//清洗某教室一天的占用情况数据，一共12节课，按序将每节课的占用情况放到列表stat中
+	//清洗某教室一天的占用情况数据，一共12节课，按序将每节课的占用情况放到列表singleRoomStat中
 	string pattern = R"(("state":")(.+?)("))";//匹配"state":"上课","JSSB"
 	regex r(pattern);
 	sregex_iterator rst(s.begin(), s.end(), r), end;//迭代器，end为空迭代器
@@ -201,6 +201,7 @@ void getAllRoomStat(string cookie, string date, string** allStat, string* roomLi
 
 
 int generateRoomList(string* roomList, int amount) {
+	//生成所有存在的西十二教室名单
 	int i = 0, j = 0, sub = 0;
 	stringstream roomName;
 	cout << endl << "所有可用的西十二教室：" << endl;
@@ -260,6 +261,7 @@ int generateRoomList(string* roomList, int amount) {
 	return sub;
 }
 void displayResult(int num, string* desiredRooms) {
+	//显示结果
 	int i, j;
 	for (i = 0; i < num / 12 + 1; i++) {
 		for (j = 0; j < 12 && i * 12 + j < num; j++) {
@@ -270,6 +272,17 @@ void displayResult(int num, string* desiredRooms) {
 }
 
 int searchForRoom(string* roomList, string** allStat, string* desiredRooms, int amount, int a = 1, int b = 12, string order = "GetRoomFreeWithin") {
+	/// <summary>
+	/// 根据不同的order使用不同的判断条件查找出所有符合条件的教室
+	/// </summary>
+	/// <param name="roomList">所有教室名称列表，一维数组，第i个元素为教室名称</param>
+	/// <param name="allStat">所有教室在某日的状态，第i个元素为指向一个长度12的一维动态数组的指针，代表roomList中第i个教室在指定日期的全天12节课的占用情况</param>
+	/// <param name="desiredRooms">存放符合条件的教室名称的数组</param>
+	/// <param name="amount">roomList元素数量</param>
+	/// <param name="a">起始节次，含义根据order不同略有不同，具体见命令注释</param>
+	/// <param name="b">终止节次，含义根据order不同略有不同，具体见命令注释</param>
+	/// <param name="order">用户指定的命令</param>
+	/// <returns>返回符合条件的教室数量</returns>
 	if (a > b) {//如果a>b就互换值
 		int tmp = a;
 		a = b;
@@ -316,6 +329,11 @@ int searchForRoom(string* roomList, string** allStat, string* desiredRooms, int 
 }
 
 int main() {
+	/// <summary>
+	/// 获取用户输入的cookie与指定日期，生成所有西十二教室列表，
+	/// 向微校园系统发送查询所有教室在指定日期占用情况的HTTP请求，获得该日所有西十二教室的占用情况并输出，
+	/// 然后根据用户输入的命令，找出符合条件的教室输出。
+	/// </summary>
 	const int roomAmount = 109;//西十二楼除总控制室(N205、N206)和音乐教室S511外，共有教室109间
 	int i = 0, j = 0;
 	string currentDate = getDate();//格式2022-05-20
@@ -374,7 +392,7 @@ int main() {
 		cout << endl;
 	}
 
-	//支持的所有命令
+	//匹配支持的所有命令的正则表达式
 	map<string, string> orderListStr;//注意map中元素是自动按key升序排列的，不是按插入顺序排列
 	map<string, regex> orderListRegex;
 	orderListStr["GetRoomFreeWithin"] = R"(^\s*freef([0-9]*)t([0-9]*)\s*$)";//匹配命令freef{a}t{b}; a, b为1-12的整数. 查找在节次[a,b]区间内全部空闲的教室，意为free from a to b.
@@ -552,11 +570,11 @@ int main() {
 		displayResult(num, desiredRooms);
 	}
 
-	//释放allStat
-	for (i = 0; i < roomAmount; i++) {
-		delete[] allStat[i];
-		allStat[i] = NULL;
-	}
-	delete[] allStat;
-	allStat = NULL;
+	//释放allStat(allStat在整个程序中都使用，不需要释放）
+//	for (i = 0; i < roomAmount; i++) {
+//		delete[] allStat[i];
+//		allStat[i] = NULL;
+//	}
+//	delete[] allStat;
+//	allStat = NULL;
 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Augus\source\repos\Guscccc\HustFreeRoomQuery\</FILEPATH>
+      <FILENAME>httplib.h</FILENAME>
+      <LINE>3687</LINE>
+      <COLUMN>14</COLUMN>
+    </SFA>
+    <DEFECTCODE>6031</DEFECTCODE>
+    <DESCRIPTION>Return value ignored: 'WSAStartup'.</DESCRIPTION>
+    <FUNCTION>httplib::detail::WSInit::{ctor}</FUNCTION>
+    <DECORATED>??0WSInit@detail@httplib@@QEAA@XZ</DECORATED>
+    <FUNCLINE>3685</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Augus\source\repos\Guscccc\HustFreeRoomQuery\</FILEPATH>
+      <FILENAME>HustFreeRoomQuery.cpp</FILENAME>
+      <LINE>71</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>6386</DEFECTCODE>
+    <DESCRIPTION>Buffer overrun while writing to 'buffer'.</DESCRIPTION>
+    <FUNCTION>getDate</FUNCTION>
+    <DECORATED>?getDate@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_J@Z</DECORATED>
+    <FUNCLINE>66</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Augus\source\repos\Guscccc\HustFreeRoomQuery\</FILEPATH>
+        <FILENAME>HustFreeRoomQuery.cpp</FILENAME>
+        <LINE>69</LINE>
+        <COLUMN>6</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'buffer' is an array of 20 elements (20 bytes)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Augus\source\repos\Guscccc\HustFreeRoomQuery\</FILEPATH>
+        <FILENAME>HustFreeRoomQuery.cpp</FILENAME>
+        <LINE>70</LINE>
+        <COLUMN>12</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>C:\Users\Augus\source\repos\Guscccc\HustFreeRoomQuery\</FILEPATH>
+        <FILENAME>HustFreeRoomQuery.cpp</FILENAME>
+        <LINE>71</LINE>
+        <COLUMN>9</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Invalid write to 'buffer[79]', (writable range is 0 to 19)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Augus\source\repos\Guscccc\HustFreeRoomQuery\</FILEPATH>
+      <FILENAME>HustFreeRoomQuery.cpp</FILENAME>
+      <LINE>78</LINE>
+      <COLUMN>33</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>UTF8ToGB2312</FUNCTION>
+    <DECORATED>?UTF8ToGB2312@@YAHPEBDPEAD@Z</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Augus\source\repos\Guscccc\HustFreeRoomQuery\</FILEPATH>
+      <FILENAME>HustFreeRoomQuery.cpp</FILENAME>
+      <LINE>79</LINE>
+      <COLUMN>21</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>UTF8ToGB2312</FUNCTION>
+    <DECORATED>?UTF8ToGB2312@@YAHPEBDPEAD@Z</DECORATED>
+    <FUNCLINE>75</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>
