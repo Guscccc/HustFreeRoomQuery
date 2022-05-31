@@ -14,7 +14,7 @@
 - 6 以上功能的任意组合
 - ### 使用方法程序有自带说明，此处不再赘述
 
-### Windows: https://github.com/Guscccc/HustFreeRoomQuery/blob/main/x64/Release/HustFreeRoomQuery.exe
+### Windows: https://github.com/Guscccc/HustFreeRoomQuery/tree/main/x64/Release/HustFreeRoomQuery.exe
 
 # 请勿用于不正当用途！
 
