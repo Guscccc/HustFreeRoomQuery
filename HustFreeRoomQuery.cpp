@@ -31,15 +31,17 @@ Room::Room(string roomName) {
 }
 string Room::generateUrl(string time) {
 	//生成向微校园系统查询该教室某日占用情况的URL
-	string _jslbh, _jsmc, _code, _jc, _time, _titleJson;
+	string _jxlbh, _jsbh, _jsmc, _code, _jc, _time, _titleJson;
 	string tmp = orientation == "S" ? "C120" : "C121";//微校园系统中用C120和C121代表西十二楼S和西十二楼N
 	stringstream url;
-	_jslbh = tmp;
-	_jslbh.append("0");
-	_jslbh.append(floor);
-	_jslbh.append("0");
-	_jslbh.append(number);
-	//S111的jslbh为C12001011
+	_jxlbh = tmp;
+	//教学楼编号
+	_jsbh = tmp;
+	_jsbh.append("0");
+	_jsbh.append(floor);
+	_jsbh.append("0");
+	_jsbh.append(number);
+	//S111的jsbh为C12001011
 	_jsmc = name + "教室";
 	//S111的jsmc为S111教室
 	_code = tmp;
@@ -58,7 +60,8 @@ string Room::generateUrl(string time) {
 	_titleJson.append(orientation);
 	_titleJson.append("'}");
 	//S111的titleJson为{'code':'C120','time':'2022-05-25','name':'西十二楼S'}
-	url << "http://hub.m.hust.edu.cn/aam/room/queryFreeRoomDetail.action?jslbh=" << _jslbh << "&jsmc=" << _jsmc << "&code=" << _code << "&jc=" << _jc << "&time=" << _time << "&titleJson=" << _titleJson;
+	//（过去的）url << "http://hub.m.hust.edu.cn/aam/room/queryFreeRoomDetail.action?jslbh=" << _jslbh << "&jsmc=" << _jsmc << "&code=" << _code << "&jc=" << _jc << "&time=" << _time << "&titleJson=" << _titleJson;
+	url << "/kxjsController/queryFreeRoomDetail?sj=" << _time << "&jxlbh=" << _jxlbh << "&jsbh=" << _jsbh << "&jc=" << _jc << "&jsmc=" << _jsmc;
 	//生成url，包含了微校园空闲教室查询系统的GET请求在url中
 	return url.str();
 }
@@ -100,17 +103,21 @@ void getSingleRoomStat(string cookie, string date, string roomName, string* sing
 	Room r(roomName);
 	string url = r.generateUrl(date);//微校园空闲教室查询系统，此url返回该教室的占用情况的Json数据
 	//cout << roomName << "的URL: " << url << endl;//输出生成的url
-	httplib::Client cli("http://hub.m.hust.edu.cn");
+	httplib::Client cli("mhub.hust.edu.cn");
 	httplib::Headers header = {
 		{"cookie", cookie},//先在浏览器打开生成的url，手动登录hub账号截获cookie，程序运行会要求输入该cookie以实现模拟登录，微校园空闲教室查询系统不登录不能使用
-		{"Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"},
-		{"Accept-Encoding", "gzip, deflate"},
-		{"Cache-Control", "max-age=0"},
-		{"Connection","keep-alive"},
-		{"Host", "hub.m.hust.edu.cn"},
-		{"User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/101.0.4951.64"}
+		{"Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"},
+		{"Host", "mhub.hust.edu.cn"},
+		{"User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36 Edg/112.0.1722.34"}
 	};
 	auto res = cli.Get(url.c_str(), header);
+	if (res && res->status == 200) {
+		// Print the response body
+		//cout << "Response: " << res->body << endl;
+	}
+	else {
+		cerr << "Failed to get a response from the server" << endl;
+	}
 	/*
 	{"json":{"dataList":[{"ZWLS":null,"JSLXMC":null,"SZLC":1,"LX":"01","state":"上课","JSSB":null,"DWBH":"622","XQM":"1","JSMC":"西十二楼S102",
 	"JSBH":"C12001002","JSRL":156,"JC":1,"FJSYZT":"1","JXLMC":"西十二楼S","ZWPS":null,"JXLBH":"C120","NUM":12,"JSLX":"普通教室"},
@@ -141,12 +148,11 @@ void getSingleRoomStat(string cookie, string date, string roomName, string* sing
 	"date":"2022年5月20日占用情况如下:"},"upfile":null}
 	*/
 	//接收到的数据编码格式为UTF-8，转码为GB2312
-	char* body_utf8 = new char[4000], * body_GB2312 = new char[4000];
+	char* body_utf8 = new char[6000], * body_GB2312 = new char[6000];
 	int l = (res->body).length();
-	if (l > 4000) {
-		cout << "服务器返回Json长度大于4000！" << endl;
+	if (l > 6000) {
+		cout << "服务器返回Json长度大于6000！" << endl;
 	}
-	int i = 0;
 	UTF8ToGB2312((res->body).c_str(), body_GB2312);
 	string data = body_GB2312;
 	roomStatDataWashing(data, singleRoomStat);
