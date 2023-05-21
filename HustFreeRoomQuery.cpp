@@ -364,7 +364,7 @@ int main() {
 	cout << "谢谢理解！" << endl;
 	cout << "开源在Github，满意给个star, 谢谢: https://github.com/Guscccc/HustFreeRoomQuery" << endl;
 	cout << "E-mail: 1596445589@qq.com" << endl;
-	cout << endl << "登录该网址取得cookie：http://hub.m.hust.edu.cn/aam/room/queryFreeRoomDetail.action" << endl << endl;
+	cout << endl << "登录该网址取得cookie（页面会显示500异常，这是正常的，直接F12找到cookie即可）：http://mhub.hust.edu.cn/kxjsController/queryFreeRoomDetail" << endl << endl;
 	//手动输入截获的cookie，模拟登录
 	cout << "请输入cookie: ";
 	getline(cin, cookie);
